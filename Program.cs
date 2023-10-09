@@ -21,6 +21,14 @@ namespace EmployeeHub_MinimalAPI
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
+			builder.Services.AddCors((setup =>
+			{
+				setup.AddPolicy("default", (options =>
+				{
+					options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+				}));
+			}));
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
