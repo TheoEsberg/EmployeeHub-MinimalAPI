@@ -1,5 +1,8 @@
 
 using EmployeeHub_MinimalAPI.Data;
+using EmployeeHub_MinimalAPI.Models;
+using EmployeeHub_MinimalAPI.Services;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeHub_MinimalAPI
@@ -20,6 +23,11 @@ namespace EmployeeHub_MinimalAPI
 			// Add the database connection service
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
+
+            builder.Services.AddScoped<IRepository<Employee>, EmployeeRepo>();
+
+			builder.Services.AddAutoMapper(typeof(MappingConfig));
+			builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 			builder.Services.AddCors((setup =>
 			{
