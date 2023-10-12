@@ -53,5 +53,10 @@ namespace EmployeeHub_MinimalAPI.Services
 			}
 			return newEmployee;
 		}
+		public async Task<Employee> Loggin(string UserName, string Password)
+		{
+			var userLoggin = await _appDbContext.Employees.FirstOrDefaultAsync(x=>x.Name == UserName && x.Password==Password);
+			return userLoggin;
+		}
 	}
 }
