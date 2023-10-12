@@ -25,9 +25,7 @@ namespace EmployeeHub_MinimalAPI
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
-            builder.Services.AddScoped<IRepository<Employee>, EmployeeRepo>();
-
-            builder.Services.AddAutoMapper(typeof(MappingConfig));
+			builder.Services.AddAutoMapper(typeof(MappingConfig));
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 			builder.Services.AddCors((setup =>
