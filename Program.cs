@@ -2,7 +2,6 @@
 using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Models;
 using EmployeeHub_MinimalAPI.Services;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,9 +26,6 @@ namespace EmployeeHub_MinimalAPI
 
             builder.Services.AddScoped<IRepository<Employee>, EmployeeRepo>();
 
-            builder.Services.AddAutoMapper(typeof(MappingConfig));
-            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-
 			builder.Services.AddCors((setup =>
 			{
 				setup.AddPolicy("default", (options =>
@@ -52,7 +48,7 @@ namespace EmployeeHub_MinimalAPI
 			app.UseAuthorization();
 
             //Get all employee
-            app.MapGet("api/employee", async ([FromServices] IRepository<Employee> employeeRepo) => 
+            app.MapGet("api/employee", async (IRepository<Employee> employeeRepo) => 
 			{
 
 				var result = await employeeRepo.GetAllAsync();
@@ -63,7 +59,7 @@ namespace EmployeeHub_MinimalAPI
             .Produces(200);
 
 			//Get one employee
-			app.MapGet("api/employee{id:int}", async ([FromServices] IRepository<Employee> employeeRepo, int id) => {
+			app.MapGet("api/employee{id:int}", async (IRepository<Employee> employeeRepo, int id) => {
 
 				var result = await employeeRepo.GetAsync(id);
 
@@ -78,7 +74,7 @@ namespace EmployeeHub_MinimalAPI
 			.Produces(404);
 
             //Create employee
-            app.MapGet("api/employee", async ([FromServices] IRepository<Employee> employeeRepo, Employee employee) => {
+            app.MapGet("api/employee", async (IRepository<Employee> employeeRepo, Employee employee) => {
 
 				var result = await employeeRepo.CreateAsync(employee);
 
@@ -93,7 +89,7 @@ namespace EmployeeHub_MinimalAPI
             .Produces(404);
 
             //Update employee
-            app.MapGet("api/employee", async ([FromServices] IRepository<Employee> employeeRepo, Employee employee) => {
+            app.MapGet("api/employee", async (IRepository<Employee> employeeRepo, Employee employee) => {
 
                 var result = await employeeRepo.UpdateAsync(employee);
 
@@ -108,7 +104,7 @@ namespace EmployeeHub_MinimalAPI
             .Produces(404);
 
             //Delete employee
-            app.MapGet("api/employee{id:int}", async ([FromServices] IRepository<Employee> employeeRepo, int id) => {
+            app.MapGet("api/employee{id:int}", async (IRepository<Employee> employeeRepo, int id) => {
 
                 var result = await employeeRepo.DeleteAsync(id);
 
