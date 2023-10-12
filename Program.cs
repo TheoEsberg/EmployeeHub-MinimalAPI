@@ -26,10 +26,10 @@ namespace EmployeeHub_MinimalAPI
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
-
 			builder.Services.AddScoped<IEmployee<Employee>, EmployeeRepo>();
 			builder.Services.AddScoped<ILogin<Employee>, LoginRepo>();
 			builder.Services.AddScoped<PasswordHashingService, PasswordHashingService>();
+
 
 			builder.Services.AddCors((setup =>
 			{

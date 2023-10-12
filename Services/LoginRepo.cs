@@ -1,7 +1,6 @@
 ﻿using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Models;
 using EmployeeHub_MinimalAPI.Services.Password;
-using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeHub_MinimalAPI.Services
 {

@@ -57,6 +57,7 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 		private async static Task<IResult> Login([FromServices] ILogin<Employee> repository, string email, string password, PasswordHashingService passwordHashingService)
 		{
 			var result = await repository.Login(email, password, passwordHashingService);
+
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
