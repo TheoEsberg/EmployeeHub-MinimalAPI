@@ -27,6 +27,7 @@ namespace EmployeeHub_MinimalAPI
 
 
 			builder.Services.AddScoped<IRepository<Employee>, EmployeeRepo>();
+			builder.Services.AddScoped<ILogin<Employee>, LoginRepo>();
 
 			builder.Services.AddCors((setup =>
 			{
