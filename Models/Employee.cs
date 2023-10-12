@@ -17,5 +17,7 @@ namespace EmployeeHub_MinimalAPI.Models
 		public Boolean isAdmin { get; set; }
 
 		public ICollection<LeaveRequest> LeaveRequest { get; set; }
+
+		public string Salt { get; set; }
 	}
 }
