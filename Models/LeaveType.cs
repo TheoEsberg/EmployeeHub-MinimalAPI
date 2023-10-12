@@ -10,5 +10,7 @@ namespace EmployeeHub_MinimalAPI.Models
 		public string Name { get; set; }
 		[Required]
 		public int MaxDays { get; set; }
+
+		public ICollection<LeaveRequest> LeaveRequest { get; set; }
 	}
 }

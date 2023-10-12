@@ -8,8 +8,10 @@ namespace EmployeeHub_MinimalAPI.Models
 		public int Id { get; set; }
 		[Required]
 		public int EmployeeId { get; set;}
+		public Employee Employee { get; set;}
 		[Required]
 		public int LeaveTypeId { get; set;}
+		public LeaveType LeaveType { get; set;}
 		[Required]
 		public int Pending { get; set; } // -1 Denied, 0 Still Pending, 1 Approved
 		public string ResponseMessage { get; set; }

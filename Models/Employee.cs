@@ -15,5 +15,7 @@ namespace EmployeeHub_MinimalAPI.Models
 		public string Password { get; set; }
 		public int VacationDays { get; set; }
 		public Boolean isAdmin { get; set; }
+
+		public ICollection<LeaveRequest> LeaveRequest { get; set; }
 	}
 }
