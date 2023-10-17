@@ -40,9 +40,9 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			return Results.Ok(result);
 		}
 
-		private async static Task<IResult> UpdateEmployee([FromServices] IEmployee<Employee> repository, Employee employee, PasswordHashingService passwordHashingService)
+		private async static Task<IResult> UpdateEmployee([FromServices] IEmployee<Employee> repository, EmployeeUpdateDTO dto, PasswordHashingService passwordHashingService)
 		{
-			var result = await repository.UpdateAsync(employee, passwordHashingService);
+			var result = await repository.UpdateAsync(dto, passwordHashingService);
 			if (result == null) { return Results.BadRequest(); };
 			return Results.Ok(result);
 		}

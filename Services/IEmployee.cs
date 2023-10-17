@@ -8,7 +8,7 @@ namespace EmployeeHub_MinimalAPI.Services
 		Task<IEnumerable<T>> GetAllAsync();
 		Task<T> GetAsync(int id);
 		Task<T> CreateAsync(EmployeeCreateDTO dto, PasswordHashingService passwordHashingService);
-		Task<T> UpdateAsync(T entity, PasswordHashingService passwordHashingService);
+		Task<T> UpdateAsync(EmployeeUpdateDTO dto, PasswordHashingService passwordHashingService);
 		Task<T> DeleteAsync(int id);
 	}
 }

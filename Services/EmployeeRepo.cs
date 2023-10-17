@@ -61,19 +61,20 @@ namespace EmployeeHub_MinimalAPI.Services
 			return _appDbContext.Employees.FirstOrDefaultAsync(x=>x.Id == id);
 		}
 
-		public async Task<Employee> UpdateAsync(Employee entity, PasswordHashingService passwordHashingService)
+		public async Task<Employee> UpdateAsync(EmployeeUpdateDTO dto, PasswordHashingService passwordHashingService)
 		{
-			var newEmployee = await _appDbContext.Employees.FindAsync(entity.Id);
-			if(newEmployee != null)
+			var oldUser = await _appDbContext.Employees.FindAsync(dto.Id);
+
+			if(oldUser != null)
 			{
-				newEmployee.Name = entity.Name;
-				newEmployee.Email = entity.Email;
-				newEmployee.Password = passwordHashingService.HashPassword(entity.Password, newEmployee.Salt);
-				newEmployee.VacationDays = entity.VacationDays;
-				newEmployee.isAdmin = entity.isAdmin;
+				if (dto.Name != "string") { oldUser.Name = dto.Name; }
+				if (dto.Email != "string") { oldUser.Email = dto.Email; }
+				if (dto.Password != "string") { oldUser.Password = passwordHashingService.HashPassword(dto.Password, oldUser.Salt); }
+				oldUser.VacationDays = dto.VacationDays;
+				oldUser.isAdmin = dto.isAdmin;
 				await _appDbContext.SaveChangesAsync();
 			}
-			return newEmployee;
+			return oldUser;
 		}
 	}
 }
