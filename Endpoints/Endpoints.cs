@@ -13,10 +13,10 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 		public static void ConfigureEndpoints(this WebApplication app)
 		{
 			app.MapGet("api/employee", GetEmployee).WithName("GetAllEmployees").WithTags("Get").Produces(200);
-			app.MapGet("api/employee{id:int}", GetEmployeeById).WithName("GetEmployeeById").WithTags("Get").Produces(200).Produces(404);
+			app.MapGet("api/employee/{id:int}", GetEmployeeById).WithName("GetEmployeeById").WithTags("Get").Produces(200).Produces(404);
 			app.MapPost("api/employee", CreateEmployee).WithName("CreateNewEmployee").WithTags("Create").Produces(200).Produces(404);
 			app.MapPut("api/employee", UpdateEmployee).WithName("UpdateEmployee").WithTags("Update").Produces(200).Produces(404);
-			app.MapDelete("api/employee{id:int}", DeleteEmployee).WithName("DeleteEmployee").WithTags("Delete").Produces(200).Produces(404);
+			app.MapDelete("api/employee/{id:int}", DeleteEmployee).WithName("DeleteEmployee").WithTags("Delete").Produces(200).Produces(404);
 			app.MapPost("/api/Login", Login).WithName("Login").WithTags("Login").Produces(200).Produces(404);
 		}
 
