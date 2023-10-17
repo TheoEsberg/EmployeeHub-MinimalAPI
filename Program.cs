@@ -48,6 +48,8 @@ namespace EmployeeHub_MinimalAPI
 				app.UseSwaggerUI();
 			}
 
+			app.UseCors("default");
+
 			app.UseHttpsRedirection();
 
 			app.ConfigureEndpoints();

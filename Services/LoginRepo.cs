@@ -1,5 +1,6 @@
 ﻿using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Models;
+using EmployeeHub_MinimalAPI.Models.DTOs;
 using EmployeeHub_MinimalAPI.Services.Password;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,9 @@ namespace EmployeeHub_MinimalAPI.Services
             _appDbContext = appDbContext;
         }
 
-		public async Task<Employee> Login(string email, string password, PasswordHashingService passwordHashingService)
+		public async Task<Employee> Login(LoginDTO loginData, PasswordHashingService passwordHashingService)
 		{
-			var employee = await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Email == email);
+			var employee = await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Email == loginData.Email);
 
 			if (employee == null)
 			{
@@ -25,7 +26,7 @@ namespace EmployeeHub_MinimalAPI.Services
 			}
 
 			// Verify the emplyee's input password against the stored hash and salt
-			if (passwordHashingService.VerifyPassword(password, employee.Password))
+			if (passwordHashingService.VerifyPassword(loginData.Password, employee.Password))
 			{
 				return employee;
 			}

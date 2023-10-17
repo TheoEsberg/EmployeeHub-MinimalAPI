@@ -17,7 +17,7 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			app.MapPost("api/employee", CreateEmployee).WithName("CreateNewEmployee").WithTags("Create").Produces(200).Produces(404);
 			app.MapPut("api/employee", UpdateEmployee).WithName("UpdateEmployee").WithTags("Update").Produces(200).Produces(404);
 			app.MapDelete("api/employee{id:int}", DeleteEmployee).WithName("DeleteEmployee").WithTags("Delete").Produces(200).Produces(404);
-			app.MapGet("/api/Login", Login).WithName("Login").WithTags("Login").Produces(200).Produces(404);
+			app.MapPost("/api/Login", Login).WithName("Login").WithTags("Login").Produces(200).Produces(404);
 		}
 
 		private async static Task<IResult> GetEmployee([FromServices] IEmployee<Employee> repository)
@@ -54,9 +54,9 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			return Results.Ok(result);
 		}
 
-		private async static Task<IResult> Login([FromServices] ILogin<Employee> repository, string email, string password, PasswordHashingService passwordHashingService)
+		private async static Task<IResult> Login([FromServices] ILogin<Employee> repository, LoginDTO loginData, PasswordHashingService passwordHashingService)
 		{
-			var result = await repository.Login(email, password, passwordHashingService);
+			var result = await repository.Login(loginData, passwordHashingService);
 
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
