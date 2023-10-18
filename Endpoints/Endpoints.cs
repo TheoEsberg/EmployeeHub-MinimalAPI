@@ -30,7 +30,7 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			app.MapDelete("api/leaveRequest/{id:int}", DeleteLeaveRequest).WithName("DeleteLeaveRequest").WithTags("DeleteLeaveRequest").Produces(200).Produces(404);
 
 			//LeaveType Endpoints
-			app.MapGet("api/leaveType", GetLeaveRequest).WithName("GetAllLeaveType").WithTags("GetLeaveType").Produces(200);
+			app.MapGet("api/leaveType", GetLeaveType).WithName("GetAllLeaveType").WithTags("GetLeaveType").Produces(200);
 			app.MapGet("api/leaveType/{id:int}", GetLeaveTypeById).WithName("GetLeaveTypeById").WithTags("GetLeaveType").Produces(200).Produces(404);
 			app.MapPost("api/leaveType", CreateLeaveType).WithName("CreateNewLeaveType").WithTags("CreateLeaveType").Produces(200).Produces(404);
 			app.MapPut("api/leaveType", UpdateLeaveType).WithName("UpdateLeaveType").WithTags("UpdateLeaveType").Produces(200).Produces(404);
