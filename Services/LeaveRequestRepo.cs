@@ -1,21 +1,33 @@
 ﻿using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Models;
+using EmployeeHub_MinimalAPI.Models.DTOs;
+using EmployeeHub_MinimalAPI.Services.Password;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeHub_MinimalAPI.Services
 {
-	public class LeaveRequestRepo : IRepository<LeaveRequest>
+	public class LeaveRequestRepo : ILeaveRequest<LeaveRequest>
 	{
 		private readonly AppDbContext _appDbContext;
 		public LeaveRequestRepo(AppDbContext appDbContext)
 		{
 			_appDbContext = appDbContext;
 		}
-		public async Task<LeaveRequest> CreateAsync(LeaveRequest entity)
+		public async Task<LeaveRequest> CreateAsync(LeaveRequestCreateDTO dto, int id)
 		{
-			await _appDbContext.LeaveRequests.AddAsync(entity);
+			var newLeaveRequest = new LeaveRequest
+			{
+				//Creates a new LeaveRequest for employee with used id
+				EmployeeId = id,
+				LeaveTypeId = dto.LeaveTypeId,
+				Pending = 0,
+				StartDate = dto.StartDate,
+				EndDate = dto.EndDate,
+				RequestDate = DateTime.Now
+			};
+			await _appDbContext.LeaveRequests.AddAsync(newLeaveRequest);
 			await _appDbContext.SaveChangesAsync();
-			return entity;
+			return newLeaveRequest;
 		}
 
 		public async Task<LeaveRequest> DeleteAsync(int id)
@@ -39,21 +51,16 @@ namespace EmployeeHub_MinimalAPI.Services
 			return await _appDbContext.LeaveRequests.FirstOrDefaultAsync(x => x.Id == id);
 		}
 
-		public async Task<LeaveRequest> UpdateAsync(LeaveRequest entity)
+		public async Task<LeaveRequest> UpdateAsync(LeaveRequestUpdateDTO dto)
 		{
-			var newLeaveRequest = await _appDbContext.LeaveRequests.FindAsync(entity.Id);
-			if(newLeaveRequest != null)
+			var oldLeaveRequest = await _appDbContext.LeaveRequests.FindAsync(dto.Id);
+			if (oldLeaveRequest != null)
 			{
-				newLeaveRequest.EmployeeId = entity.EmployeeId;
-				newLeaveRequest.LeaveTypeId = entity.LeaveTypeId;
-				newLeaveRequest.Pending=entity.Pending;
-				newLeaveRequest.ResponseMessage = entity.ResponseMessage;
-				newLeaveRequest.StartDate = entity.StartDate;
-				newLeaveRequest.EndDate = entity.EndDate;
-				newLeaveRequest.RequestDate = entity.RequestDate;
+				oldLeaveRequest.Pending = dto.Pending;
+				if (dto.ResponseMessage != "string") { oldLeaveRequest.ResponseMessage = dto.ResponseMessage; }
 				await _appDbContext.SaveChangesAsync();
 			}
-			return newLeaveRequest;
+			return oldLeaveRequest;
 		}
 	}
 }
