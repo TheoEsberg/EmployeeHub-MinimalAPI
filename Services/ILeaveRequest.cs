@@ -8,7 +8,7 @@ namespace EmployeeHub_MinimalAPI.Services
 		Task<IEnumerable<T>> GetAllAsync();
 		Task<IEnumerable<T>> GetAllEmployeeAsync(int id);
 		Task<T> GetAsync(int id);
-		Task<T> CreateAsync(LeaveRequestCreateDTO dto, int id);
+		Task<T> CreateAsync(LeaveRequestCreateDTO dto);
 		Task<T> UpdateAsync(LeaveRequestUpdateDTO dto);
 		Task<T> DeleteAsync(int id);
 	}

@@ -13,12 +13,12 @@ namespace EmployeeHub_MinimalAPI.Services
 		{
 			_appDbContext = appDbContext;
 		}
-		public async Task<LeaveRequest> CreateAsync(LeaveRequestCreateDTO dto, int id)
+		public async Task<LeaveRequest> CreateAsync(LeaveRequestCreateDTO dto)
 		{
 			var newLeaveRequest = new LeaveRequest
 			{
 				//Creates a new LeaveRequest for employee with used id
-				EmployeeId = id,
+				EmployeeId = dto.EmployeeId,
 				LeaveTypeId = dto.LeaveTypeId,
 				Pending = 0,
 				StartDate = dto.StartDate,

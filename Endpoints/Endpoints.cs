@@ -101,9 +101,9 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
-		private async static Task<IResult> CreateLeaveRequest([FromServices] ILeaveRequest<LeaveRequest> repository, LeaveRequestCreateDTO dto,int employeeId)
+		private async static Task<IResult> CreateLeaveRequest([FromServices] ILeaveRequest<LeaveRequest> repository, LeaveRequestCreateDTO dto)
 		{
-			var result = await repository.CreateAsync(dto, employeeId);
+			var result = await repository.CreateAsync(dto);
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
