@@ -46,6 +46,11 @@ namespace EmployeeHub_MinimalAPI.Services
 			return await _appDbContext.LeaveRequests.ToListAsync();
 		}
 
+		public async Task<IEnumerable<LeaveRequest>> GetAllEmployeeAsync(int id)
+		{
+			return await _appDbContext.LeaveRequests.Where(x=>x.EmployeeId==id).ToListAsync();
+		}
+
 		public async Task<LeaveRequest> GetAsync(int id)
 		{
 			return await _appDbContext.LeaveRequests.FirstOrDefaultAsync(x => x.Id == id);

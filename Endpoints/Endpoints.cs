@@ -24,6 +24,7 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 
 			//LeaveRequest Endpoints
 			app.MapGet("api/leaveRequest", GetLeaveRequest).WithName("GetAllLeaveRequests").WithTags("GetLeaveRequest").Produces(200);
+			app.MapGet("api/leaveRequest/employee/{id:int}", GetLeaveRequestByEmployeeId).WithName("GetAllLeaveRequestsByEmployee").WithTags("GetLeaveRequest").Produces(200);
 			app.MapGet("api/leaveRequest/{id:int}", GetLeaveRequestById).WithName("GetLeaveRequestById").WithTags("GetLeaveRequest").Produces(200).Produces(404);
 			app.MapPost("api/leaveRequest", CreateLeaveRequest).WithName("CreateNewLeaveRequest").WithTags("CreateLeaveRequest").Produces(200).Produces(404);
 			app.MapPut("api/leaveRequest", UpdateLeaveRequest).WithName("UpdateLeaveRequest").WithTags("UpdateLeaveRequest").Produces(200).Produces(404);
@@ -85,6 +86,12 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 		private async static Task<IResult> GetLeaveRequest([FromServices] ILeaveRequest<LeaveRequest> repository)
 		{
 			var result = await repository.GetAllAsync();
+			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+		private async static Task<IResult> GetLeaveRequestByEmployeeId([FromServices] ILeaveRequest<LeaveRequest> repository,int id)
+		{
+			var result = await repository.GetAllEmployeeAsync(id);
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
