@@ -31,6 +31,7 @@ namespace EmployeeHub_MinimalAPI
 			builder.Services.AddScoped<PasswordHashingService, PasswordHashingService>();
 			builder.Services.AddScoped<ILeaveRequest<LeaveRequest>, LeaveRequestRepo>();
 			builder.Services.AddScoped<ILeaveType<LeaveType>, LeaveTypeRepo>();
+			builder.Services.AddScoped<IEmail, EmailRepo>();
 
 
 			builder.Services.AddCors((setup =>

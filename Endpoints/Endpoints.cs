@@ -22,6 +22,9 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			//Login Endpoints
 			app.MapPost("/api/Login", Login).WithName("Login").WithTags("Login").Produces(200).Produces(404);
 
+			//Email Endpoints 
+			app.MapPost("api/SendMail", SendEmail).WithName("SendEmail").WithTags("SendEmail").Produces(200).Produces(400);
+
 			//LeaveRequest Endpoints
 			app.MapGet("api/leaveRequest", GetLeaveRequest).WithName("GetAllLeaveRequests").WithTags("GetLeaveRequest").Produces(200);
 			app.MapGet("api/leaveRequest/employee/{id:int}", GetLeaveRequestByEmployeeId).WithName("GetAllLeaveRequestsByEmployee").WithTags("GetLeaveRequest").Produces(200);
@@ -80,6 +83,20 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
+		}
+
+		//Email Methods
+		private async static Task<IResult> SendEmail([FromServices] IEmail emailService, EmailRequestDTO emailRequest)
+		{
+			try
+			{
+				await emailService.SendEmailAsync(emailRequest.To, emailRequest.Subject, emailRequest.Body);
+				return Results.Ok(new { message = "Email sent successfully" });
+			}
+			catch (Exception ex)
+			{
+				return Results.BadRequest(new {error = "Failed to send email", message = ex.Message });
+			}
 		}
 
 		//LeaveRequest Methods
