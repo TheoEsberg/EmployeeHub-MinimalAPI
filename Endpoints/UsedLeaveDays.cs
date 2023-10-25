@@ -78,10 +78,16 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
-		private async static Task<IResult> GetUsedLeaveDaysByEmployeeId([FromServices] IUsedLeaveDays<Models.UsedLeaveDays> repository, int employeeId)
+		private async static Task<IResult> GetUsedLeaveDaysByEmployeeId([FromServices] IUsedLeaveDays<Models.UsedLeaveDays> repository, [FromServices] ILeaveType<Models.LeaveType> leaveType, int employeeId)
 		{
 			var result = await repository.GetByEmployeeId(employeeId);
 			if (result == null) { return Results.BadRequest(); }
+			var types = await leaveType.GetAllAsync();
+			foreach (var item in result)
+			{
+				var type = types.FirstOrDefault(x => x.Id == item.LeaveTypeId);
+				item.Days = (type.MaxDays - item.Days);
+			}
 			return Results.Ok(result);
 		}
 		private async static Task<IResult> GetUsedLeaveDaysByLeaveTypeId([FromServices] IUsedLeaveDays<Models.UsedLeaveDays> repository, int leaveTypeId)
