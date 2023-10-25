@@ -16,7 +16,7 @@ namespace EmployeeHub_MinimalAPI.Services
 
 		public async Task<UsedLeaveDays> CreateAsync(UsedLeaveDaysCreateDTO dto)
 		{
-			var oldUsedLeaveDays = await _appDbContext.UsedLeaveDays.FindAsync(dto.EmployeeId, dto.LeaveTypeId);
+			var oldUsedLeaveDays = await _appDbContext.UsedLeaveDays.FirstOrDefaultAsync(e => e.EmployeeId == dto.EmployeeId && e.LeaveTypeId == dto.LeaveTypeId);
 			if (oldUsedLeaveDays == null)
 			{
 				var newUsedLeaveDays = new UsedLeaveDays

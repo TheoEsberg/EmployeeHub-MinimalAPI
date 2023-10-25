@@ -4,6 +4,7 @@ using EmployeeHub_MinimalAPI.Services;
 using EmployeeHub_MinimalAPI.Services.Password;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace EmployeeHub_MinimalAPI.Endpoints
@@ -39,6 +40,15 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			app.MapPost("api/leaveType", CreateLeaveType).WithName("CreateNewLeaveType").WithTags("CreateLeaveType").Produces(200).Produces(404);
 			app.MapPut("api/leaveType", UpdateLeaveType).WithName("UpdateLeaveType").WithTags("UpdateLeaveType").Produces(200).Produces(404);
 			app.MapDelete("api/leaveType/{id:int}", DeleteLeaveType).WithName("DeleteLeaveType").WithTags("DeleteLeaveType").Produces(200).Produces(404);
+
+			// UsedLeaveDays Endpoints
+			app.MapGet("api/usedLeaveDays", GetAllUsedLeaveDays).WithName("GetAllUsedLeaveDays").WithTags("GetUsedLeaveDays").Produces(200);
+			app.MapGet("api/usedLeaveDays/{id:int}", GetUsedLeaveDaysById).WithName("GetUsedLeaveDaysById").WithTags("GetUsedLeaveDays").Produces(200).Produces(404);
+			app.MapGet("api/usedLeaveDays/employee/{employeeId:int}", GetUsedLeaveDaysByEmployeeId).WithName("GetUsedLeaveDaysByEmployeeId").WithTags("GetUsedLeaveDays").Produces(200);
+			app.MapGet("api/usedLeaveDays/leaveType/{leaveTypeId:int}", GetUsedLeaveDaysByLeaveTypeId).WithName("GetUsedLeaveDaysByLeaveTypeId").WithTags("GetUsedLeaveDays").Produces(200);
+			app.MapPost("api/usedLeaveDays", CreateUsedLeaveDays).WithName("CreateUsedLeaveDays").WithTags("CreateUsedLeaveDays").Produces(200).Produces(404);
+			app.MapPut("api/usedLeaveDays", UpdateUsedLeaveDays).WithName("UpdateUsedLeaveDays").WithTags("UpdateUsedLeaveDays").Produces(200).Produces(404);
+			app.MapDelete("api/usedLeaveDays/{id:int}", DeleteUsedLeaveDays).WithName("DeleteUsedLeaveDays").WithTags("DeleteUsedLeaveDays").Produces(200).Produces(404);
 		}
 
 		//Employee Methods
@@ -65,14 +75,14 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 		private async static Task<IResult> UpdateEmployee([FromServices] IEmployee<Employee> repository, EmployeeUpdateDTO dto, PasswordHashingService passwordHashingService)
 		{
 			var result = await repository.UpdateAsync(dto, passwordHashingService);
-			if (result == null) { return Results.BadRequest(); };
+			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
 
 		private async static Task<IResult> DeleteEmployee([FromServices] IEmployee<Employee> repository, int id)
 		{
 			var result = await repository.DeleteAsync(id);
-			if (result == null) { return Results.BadRequest(id); };
+			if (result == null) { return Results.BadRequest(id); }
 			return Results.Ok(result);
 		}
 
@@ -127,13 +137,13 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 		private async static Task<IResult> UpdateLeaveRequest([FromServices] ILeaveRequest<LeaveRequest> repository, LeaveRequestUpdateDTO dto)
 		{
 			var result = await repository.UpdateAsync(dto);
-			if (result == null) { return Results.BadRequest(); };
+			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
 		private async static Task<IResult> DeleteLeaveRequest([FromServices] ILeaveRequest<LeaveRequest> repository, int id)
 		{
 			var result = await repository.DeleteAsync(id);
-			if (result == null) { return Results.BadRequest(id); };
+			if (result == null) { return Results.BadRequest(id); }
 			return Results.Ok(result);
 		}
 
@@ -159,13 +169,61 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 		private async static Task<IResult> UpdateLeaveType([FromServices] ILeaveType<LeaveType> repository, LeaveType entity)
 		{
 			var result = await repository.UpdateAsync(entity);
-			if (result == null) { return Results.BadRequest(); };
+			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
 		private async static Task<IResult> DeleteLeaveType([FromServices] ILeaveType<LeaveType> repository, int id)
 		{
 			var result = await repository.DeleteAsync(id);
-			if (result == null) { return Results.BadRequest(id); };
+			if (result == null) { return Results.BadRequest(id); }
+			return Results.Ok(result);
+		}
+
+		// UsedLeaveDays Endpoints
+		private async static Task<IResult> CreateUsedLeaveDays([FromServices] IUsedLeaveDays<UsedLeaveDays> repository, UsedLeaveDaysCreateDTO dto)
+		{
+			var result = await repository.CreateAsync(dto);
+			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+
+		private async static Task<IResult> UpdateUsedLeaveDays([FromServices] IUsedLeaveDays<UsedLeaveDays> repository, UsedLeaveDaysUpdateDTO dto)
+		{
+			var result = await repository.UpdateDaysAsync(dto);
+			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+
+		private async static Task<IResult> GetAllUsedLeaveDays([FromServices] IUsedLeaveDays<UsedLeaveDays> repository) 
+		{
+			var result = await repository.GetAllAsync();
+			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+
+		private async static Task<IResult> GetUsedLeaveDaysById([FromServices] IUsedLeaveDays<UsedLeaveDays> repository, int id)
+		{
+			var result = await repository.GetAsync(id);
+			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+		private async static Task<IResult> GetUsedLeaveDaysByEmployeeId([FromServices] IUsedLeaveDays<UsedLeaveDays> repository, int employeeId)
+		{
+			var result = await repository.GetByEmployeeId(employeeId);
+			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+		private async static Task<IResult> GetUsedLeaveDaysByLeaveTypeId([FromServices] IUsedLeaveDays<UsedLeaveDays> repository, int leaveTypeId)
+		{
+			var result = await repository.GetByLeaveTypeId(leaveTypeId);
+			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+
+		private async static Task<IResult> DeleteUsedLeaveDays([FromServices] IUsedLeaveDays<UsedLeaveDays> repository, int id)
+		{
+			var result = await repository.DeleteAsync(id);
+			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
 	}
