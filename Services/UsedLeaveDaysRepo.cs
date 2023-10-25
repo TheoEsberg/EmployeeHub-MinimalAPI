@@ -1,6 +1,7 @@
 ﻿using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Models;
 using EmployeeHub_MinimalAPI.Models.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeHub_MinimalAPI.Services
 {
@@ -13,14 +14,33 @@ namespace EmployeeHub_MinimalAPI.Services
             _appDbContext = appDbContext;
         }
 
-		public Task<UsedLeaveDays> CreateAsync(UsedLeaveDaysCreateDTO dto)
+		public async Task<UsedLeaveDays> CreateAsync(UsedLeaveDaysCreateDTO dto)
 		{
-			throw new NotImplementedException();
+			var oldUsedLeaveDays = await _appDbContext.UsedLeaveDays.FindAsync(dto.EmployeeId, dto.LeaveTypeId);
+			if (oldUsedLeaveDays == null)
+			{
+				var newUsedLeaveDays = new UsedLeaveDays
+				{
+					EmployeeId = dto.EmployeeId,
+					LeaveTypeId = dto.LeaveTypeId,
+					Days = 0
+				};
+				await _appDbContext.UsedLeaveDays.AddAsync(newUsedLeaveDays);
+				await _appDbContext.SaveChangesAsync();
+				return newUsedLeaveDays;
+			}
+			return null;
 		}
 
-		public Task<UsedLeaveDays> DeleteAsync(int id)
+		public async Task<UsedLeaveDays> DeleteAsync(int id)
 		{
-			throw new NotImplementedException();
+			var UsedLeaveDaysDelete = await _appDbContext.UsedLeaveDays.FirstOrDefaultAsync(x => x.Id == id);
+			if (UsedLeaveDaysDelete != null)
+			{
+				_appDbContext.UsedLeaveDays.Remove(UsedLeaveDaysDelete);
+				await _appDbContext.SaveChangesAsync();
+			}
+			return UsedLeaveDaysDelete;
 		}
 
 		public Task<IEnumerable<UsedLeaveDays>> GetAllAsync()
@@ -43,9 +63,15 @@ namespace EmployeeHub_MinimalAPI.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<UsedLeaveDays> UpdateAsync(UsedLeaveDaysCreateDTO dto)
+		public async Task<UsedLeaveDays> UpdateDaysAsync(UsedLeaveDaysUpdateDTO dto)
 		{
-			throw new NotImplementedException();
+			var oldUsedLeaveDays= await _appDbContext.UsedLeaveDays.FindAsync(dto.Id);
+			if (oldUsedLeaveDays != null)
+			{
+				oldUsedLeaveDays.Days = oldUsedLeaveDays.Days + dto.Days;
+				await _appDbContext.SaveChangesAsync();
+			}
+			return oldUsedLeaveDays;
 		}
 	}
 }

@@ -14,6 +14,7 @@ namespace EmployeeHub_MinimalAPI.Data
 		public DbSet<LeaveRequest> LeaveRequests { get; set; }
 		public DbSet<LeaveType> LeaveTypes { get; set; }
 
+		public DbSet<UsedLeaveDays> UsedLeaveDays { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

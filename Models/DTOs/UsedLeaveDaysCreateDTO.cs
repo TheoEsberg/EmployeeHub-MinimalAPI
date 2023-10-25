@@ -9,8 +9,5 @@ namespace EmployeeHub_MinimalAPI.Models.DTOs
 
 		[Required]
 		public int LeaveTypeId { get; set; }
-
-		[Required]
-		public int Days { get; set; }
 	}
 }
