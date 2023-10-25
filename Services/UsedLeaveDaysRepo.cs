@@ -55,12 +55,16 @@ namespace EmployeeHub_MinimalAPI.Services
 
 		public async Task<IEnumerable<UsedLeaveDays>> GetByEmployeeId(int employeeId)
 		{
-			return await _appDbContext.UsedLeaveDays.Where(e => e.EmployeeId == employeeId).ToListAsync();
+			var result = await _appDbContext.UsedLeaveDays.Where(e => e.EmployeeId == employeeId).ToListAsync();
+			if (result.Count == 0) { return null; }
+			return result;
 		}
 
 		public async Task<IEnumerable<UsedLeaveDays>> GetByLeaveTypeId(int leaveTypeId)
 		{
-			return await _appDbContext.UsedLeaveDays.Where(e => e.LeaveTypeId == leaveTypeId).ToListAsync();
+			var result = await _appDbContext.UsedLeaveDays.Where(e => e.LeaveTypeId == leaveTypeId).ToListAsync();
+			if (result.Count == 0) { return null; }
+			return result;
 		}
 
 		public async Task<UsedLeaveDays> UpdateDaysAsync(UsedLeaveDaysUpdateDTO dto)

@@ -44,8 +44,8 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			// UsedLeaveDays Endpoints
 			app.MapGet("api/usedLeaveDays", GetAllUsedLeaveDays).WithName("GetAllUsedLeaveDays").WithTags("GetUsedLeaveDays").Produces(200);
 			app.MapGet("api/usedLeaveDays/{id:int}", GetUsedLeaveDaysById).WithName("GetUsedLeaveDaysById").WithTags("GetUsedLeaveDays").Produces(200).Produces(404);
-			app.MapGet("api/usedLeaveDays/employee/{employeeId:int}", GetUsedLeaveDaysByEmployeeId).WithName("GetUsedLeaveDaysByEmployeeId").WithTags("GetUsedLeaveDays").Produces(200);
-			app.MapGet("api/usedLeaveDays/leaveType/{leaveTypeId:int}", GetUsedLeaveDaysByLeaveTypeId).WithName("GetUsedLeaveDaysByLeaveTypeId").WithTags("GetUsedLeaveDays").Produces(200);
+			app.MapGet("api/usedLeaveDays/employee/{employeeId:int}", GetUsedLeaveDaysByEmployeeId).WithName("GetUsedLeaveDaysByEmployeeId").WithTags("GetUsedLeaveDays").Produces(200).Produces(404);
+			app.MapGet("api/usedLeaveDays/leaveType/{leaveTypeId:int}", GetUsedLeaveDaysByLeaveTypeId).WithName("GetUsedLeaveDaysByLeaveTypeId").WithTags("GetUsedLeaveDays").Produces(200).Produces(404);
 			app.MapPost("api/usedLeaveDays", CreateUsedLeaveDays).WithName("CreateUsedLeaveDays").WithTags("CreateUsedLeaveDays").Produces(200).Produces(404);
 			app.MapPut("api/usedLeaveDays", UpdateUsedLeaveDays).WithName("UpdateUsedLeaveDays").WithTags("UpdateUsedLeaveDays").Produces(200).Produces(404);
 			app.MapDelete("api/usedLeaveDays/{id:int}", DeleteUsedLeaveDays).WithName("DeleteUsedLeaveDays").WithTags("DeleteUsedLeaveDays").Produces(200).Produces(404);
