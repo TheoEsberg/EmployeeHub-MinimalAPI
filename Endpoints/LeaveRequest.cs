@@ -68,6 +68,7 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 
 		private async static Task<IResult> CreateLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository,[FromServices]IUsedLeaveDays<Models.UsedLeaveDays> usedLeaveDays,[FromServices]ILeaveType<Models.LeaveType> leaveType, LeaveRequestCreateDTO dto)
 		{
+
 			var daysUsed = await usedLeaveDays.GetByEmployeeLeaveId(dto.EmployeeId, dto.LeaveTypeId);
 
 			var maxDays = await leaveType.GetAsync(dto.LeaveTypeId);
@@ -81,29 +82,22 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			var result = await repository.CreateAsync(dto);
 			if (result == null) { return Results.BadRequest(); }
 
-			var newUsedLeaveDays = new UsedLeaveDaysUpdateDTO
-			{
-				EmployeeId = dto.EmployeeId,
-				LeaveTypeId = dto.LeaveTypeId,
-				Days = daysUsing
-			};
-			await usedLeaveDays.UpdateDaysAsync(newUsedLeaveDays);
-
 			return Results.Ok(result);
 		}
 
 		private async static Task<IResult> UpdateLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository,[FromServices] IUsedLeaveDays<Models.UsedLeaveDays> usedLeaveDays, LeaveRequestUpdateDTO dto)
 		{
-			var test = dto.Pending;
+			var test = await repository.GetAsync(dto.Id);
+			int testing = test.Pending;
 			var result = await repository.UpdateAsync(dto);
 			if (result == null) { return Results.BadRequest(); }
-			if(result.Pending==1 && result.Pending != test)
+			if(result.Pending==1 && result.Pending != testing)
 			{
 				var updatedUsedLeaveDays = new UsedLeaveDaysUpdateDTO
 				{
 					EmployeeId = result.EmployeeId,
 					LeaveTypeId = result.LeaveTypeId,
-					Days = (result.EndDate - result.StartDate).Days
+					Days = ((result.EndDate - result.StartDate).Days)+1
 				};
 				await usedLeaveDays.UpdateDaysAsync(updatedUsedLeaveDays);
 			}
