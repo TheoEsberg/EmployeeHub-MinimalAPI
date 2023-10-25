@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeHub_MinimalAPI.Models.DTOs
+namespace EmployeeHub_MinimalAPI.Models.DTOs.Login
 {
-	public class EmployeeCreateDTO
+	public class LoginDTO
 	{
-		[Required]
-		public string Name { get; set; }
 		[Required]
 		[EmailAddress]
 		public string Email { get; set; }
+
 		[Required]
 		public string Password { get; set; }
 	}

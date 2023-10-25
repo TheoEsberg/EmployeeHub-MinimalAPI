@@ -1,9 +1,9 @@
-﻿using EmployeeHub_MinimalAPI.Models.DTOs;
+﻿using EmployeeHub_MinimalAPI.Models.DTOs.Employee;
 using EmployeeHub_MinimalAPI.Services.Password;
 
-namespace EmployeeHub_MinimalAPI.Services
+namespace EmployeeHub_MinimalAPI.Services.Interfaces
 {
-	public interface IEmployee<T>
+    public interface IEmployee<T>
 	{
 		Task<IEnumerable<T>> GetAllAsync();
 		Task<T> GetAsync(int id);

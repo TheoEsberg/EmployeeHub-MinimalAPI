@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeHub_MinimalAPI.Models.DTOs
+namespace EmployeeHub_MinimalAPI.Models.DTOs.LeaveType
 {
 	public class LeaveTypeCreateDTO
 	{

@@ -1,12 +1,12 @@
 ﻿using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Models;
-using EmployeeHub_MinimalAPI.Models.DTOs;
-using EmployeeHub_MinimalAPI.Services.Password;
+using EmployeeHub_MinimalAPI.Models.DTOs.LeaveRequest;
+using EmployeeHub_MinimalAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeHub_MinimalAPI.Services
+namespace EmployeeHub_MinimalAPI.Services.Repositories
 {
-	public class LeaveRequestRepo : ILeaveRequest<LeaveRequest>
+    public class LeaveRequestRepo : ILeaveRequest<LeaveRequest>
 	{
 		private readonly AppDbContext _appDbContext;
 		public LeaveRequestRepo(AppDbContext appDbContext)

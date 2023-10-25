@@ -2,9 +2,9 @@
 using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Endpoints;
 using EmployeeHub_MinimalAPI.Models;
-using EmployeeHub_MinimalAPI.Services;
 using EmployeeHub_MinimalAPI.Services.Password;
-using Microsoft.AspNetCore.Mvc;
+using EmployeeHub_MinimalAPI.Services.Repositories;
+using EmployeeHub_MinimalAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeHub_MinimalAPI
@@ -25,7 +25,7 @@ namespace EmployeeHub_MinimalAPI
 			// Add the database connection service
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
-
+			
 			builder.Services.AddScoped<IEmployee<Employee>, EmployeeRepo>();
 			builder.Services.AddScoped<ILogin<Employee>, LoginRepo>();
 			builder.Services.AddScoped<PasswordHashingService, PasswordHashingService>();

@@ -1,9 +1,9 @@
-﻿using EmployeeHub_MinimalAPI.Models.DTOs;
+﻿using EmployeeHub_MinimalAPI.Models.DTOs.LeaveRequest;
 using EmployeeHub_MinimalAPI.Services.Password;
 
-namespace EmployeeHub_MinimalAPI.Services
+namespace EmployeeHub_MinimalAPI.Services.Interfaces
 {
-	public interface ILeaveRequest<T>
+    public interface ILeaveRequest<T>
 	{
 		Task<IEnumerable<T>> GetAllAsync();
 		Task<IEnumerable<T>> GetAllEmployeeAsync(int id);

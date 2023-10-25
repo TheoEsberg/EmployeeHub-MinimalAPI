@@ -1,15 +1,17 @@
 ﻿using EmployeeHub_MinimalAPI.Models;
-using EmployeeHub_MinimalAPI.Models.DTOs;
-using EmployeeHub_MinimalAPI.Services;
+using EmployeeHub_MinimalAPI.Models.DTOs.Email;
+using EmployeeHub_MinimalAPI.Models.DTOs.Employee;
+using EmployeeHub_MinimalAPI.Models.DTOs.LeaveRequest;
+using EmployeeHub_MinimalAPI.Models.DTOs.LeaveType;
+using EmployeeHub_MinimalAPI.Models.DTOs.Login;
+using EmployeeHub_MinimalAPI.Models.DTOs.UsedLeaveDays;
+using EmployeeHub_MinimalAPI.Services.Interfaces;
 using EmployeeHub_MinimalAPI.Services.Password;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace EmployeeHub_MinimalAPI.Endpoints
 {
-	public static class Endpoints
+    public static class Endpoints
 	{
 		public static void ConfigureEndpoints(this WebApplication app)
 		{

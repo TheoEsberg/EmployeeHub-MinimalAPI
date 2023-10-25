@@ -1,4 +1,5 @@
-﻿namespace EmployeeHub_MinimalAPI.Services
+﻿
+namespace EmployeeHub_MinimalAPI.Services.Interfaces
 {
 	public interface IEmail
 	{

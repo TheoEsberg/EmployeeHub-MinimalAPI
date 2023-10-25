@@ -1,8 +1,8 @@
-﻿using EmployeeHub_MinimalAPI.Models.DTOs;
+﻿using EmployeeHub_MinimalAPI.Models.DTOs.LeaveType;
 
-namespace EmployeeHub_MinimalAPI.Services
+namespace EmployeeHub_MinimalAPI.Services.Interfaces
 {
-	public interface ILeaveType<T>
+    public interface ILeaveType<T>
 	{
 		Task<IEnumerable<T>> GetAllAsync();
 		Task<T> GetAsync(int id);
