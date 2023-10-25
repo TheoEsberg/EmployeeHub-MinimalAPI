@@ -13,12 +13,19 @@ namespace EmployeeHub_MinimalAPI.Data
 		public DbSet<Employee> Employees { get; set; }
 		public DbSet<LeaveRequest> LeaveRequests { get; set; }
 		public DbSet<LeaveType> LeaveTypes { get; set; }
-
 		public DbSet<UsedLeaveDays> UsedLeaveDays { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+
+			var usedLeaveDays = new UsedLeaveDays
+			{
+				Id = 1,
+				EmployeeId = 1,
+				LeaveTypeId = 1,
+				Days = 0
+			};
 
 			// Add test data for Employees
 			var employees = new List<Employee>

@@ -9,7 +9,7 @@ namespace EmployeeHub_MinimalAPI.Services
 		Task<T> CreateAsync(UsedLeaveDaysCreateDTO dto);
 		Task<T> UpdateDaysAsync(UsedLeaveDaysUpdateDTO dto);
 		Task<T> DeleteAsync(int id);
-		Task<T> GetByEmployeeId(int employeeId);
-		Task<T> GetByLeaveTypeId(int leaveTypeId);
+		Task<IEnumerable<T>> GetByEmployeeId(int employeeId);
+		Task<IEnumerable<T>> GetByLeaveTypeId(int leaveTypeId);
 	}
 }

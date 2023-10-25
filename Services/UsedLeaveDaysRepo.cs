@@ -43,24 +43,24 @@ namespace EmployeeHub_MinimalAPI.Services
 			return UsedLeaveDaysDelete;
 		}
 
-		public Task<IEnumerable<UsedLeaveDays>> GetAllAsync()
+		public async Task<IEnumerable<UsedLeaveDays>> GetAllAsync()
 		{
-			throw new NotImplementedException();
+			return await _appDbContext.UsedLeaveDays.ToListAsync();
 		}
 
-		public Task<UsedLeaveDays> GetAsync(int id)
+		public async Task<UsedLeaveDays> GetAsync(int id)
 		{
-			throw new NotImplementedException();
+			return await _appDbContext.UsedLeaveDays.FirstOrDefaultAsync(e => e.Id == id);
 		}
 
-		public Task<UsedLeaveDays> GetByEmployeeId(int employeeId)
+		public async Task<IEnumerable<UsedLeaveDays>> GetByEmployeeId(int employeeId)
 		{
-			throw new NotImplementedException();
+			return await _appDbContext.UsedLeaveDays.Where(e => e.EmployeeId == employeeId).ToListAsync();
 		}
 
-		public Task<UsedLeaveDays> GetByLeaveTypeId(int leaveTypeId)
+		public async Task<IEnumerable<UsedLeaveDays>> GetByLeaveTypeId(int leaveTypeId)
 		{
-			throw new NotImplementedException();
+			return await _appDbContext.UsedLeaveDays.Where(e => e.LeaveTypeId == leaveTypeId).ToListAsync();
 		}
 
 		public async Task<UsedLeaveDays> UpdateDaysAsync(UsedLeaveDaysUpdateDTO dto)
