@@ -66,10 +66,29 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			return Results.Ok(result);
 		}
 
-		private async static Task<IResult> CreateLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository, LeaveRequestCreateDTO dto)
+		private async static Task<IResult> CreateLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository,[FromServices]IUsedLeaveDays<Models.UsedLeaveDays> usedLeaveDays,[FromServices]ILeaveType<Models.LeaveType> leaveType, LeaveRequestCreateDTO dto)
 		{
+			var daysUsed = await usedLeaveDays.GetByEmployeeLeaveId(dto.EmployeeId, dto.LeaveTypeId);
+
+			var maxDays = await leaveType.GetAsync(dto.LeaveTypeId);
+
+			var daysLeft = maxDays.MaxDays - daysUsed.Days;
+
+			var daysUsing = (dto.EndDate - dto.StartDate).Days;
+
+			if ( daysUsing > daysLeft) { return  Results.BadRequest(); }
+
 			var result = await repository.CreateAsync(dto);
 			if (result == null) { return Results.BadRequest(); }
+
+			var newUsedLeaveDays = new UsedLeaveDaysUpdateDTO
+			{
+				EmployeeId = dto.EmployeeId,
+				LeaveTypeId = dto.LeaveTypeId,
+				Days = daysUsing
+			};
+			await usedLeaveDays.UpdateDaysAsync(newUsedLeaveDays);
+
 			return Results.Ok(result);
 		}
 

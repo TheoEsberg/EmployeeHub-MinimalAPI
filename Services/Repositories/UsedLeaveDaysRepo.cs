@@ -61,7 +61,12 @@ namespace EmployeeHub_MinimalAPI.Services.Repositories
             return result;
         }
 
-        public async Task<IEnumerable<UsedLeaveDays>> GetByLeaveTypeId(int leaveTypeId)
+		public async Task<UsedLeaveDays> GetByEmployeeLeaveId(int employeeId, int leaveTypeId)
+		{
+			return await _appDbContext.UsedLeaveDays.FirstOrDefaultAsync(e => e.EmployeeId == employeeId && e.LeaveTypeId==leaveTypeId);
+		}
+
+		public async Task<IEnumerable<UsedLeaveDays>> GetByLeaveTypeId(int leaveTypeId)
         {
             var result = await _appDbContext.UsedLeaveDays.Where(e => e.LeaveTypeId == leaveTypeId).ToListAsync();
             if (result.Count == 0) { return null; }

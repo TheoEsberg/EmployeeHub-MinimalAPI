@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EmployeeHub_MinimalAPI.Models
 {
@@ -15,6 +16,7 @@ namespace EmployeeHub_MinimalAPI.Models
 		public int VacationDays { get; set; }
 		public Boolean isAdmin { get; set; }
 
+		[JsonIgnore]
 		public ICollection<LeaveRequest> LeaveRequest { get; set; }
 
 		public string Salt { get; set; }
