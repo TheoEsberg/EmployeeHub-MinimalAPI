@@ -26,13 +26,13 @@ namespace EmployeeHub_MinimalAPI
 			builder.Services.AddDbContext<AppDbContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 			
-			builder.Services.AddScoped<IEmployee<Employee>, EmployeeRepo>();
-			builder.Services.AddScoped<ILogin<Employee>, LoginRepo>();
+			builder.Services.AddScoped<IEmployee<Models.Employee>, EmployeeRepo>();
+			builder.Services.AddScoped<ILogin<Models.Employee>, LoginRepo>();
 			builder.Services.AddScoped<PasswordHashingService, PasswordHashingService>();
-			builder.Services.AddScoped<ILeaveRequest<LeaveRequest>, LeaveRequestRepo>();
-			builder.Services.AddScoped<ILeaveType<LeaveType>, LeaveTypeRepo>();
+			builder.Services.AddScoped<ILeaveRequest<Models.LeaveRequest>, LeaveRequestRepo>();
+			builder.Services.AddScoped<ILeaveType<Models.LeaveType>, LeaveTypeRepo>();
 			builder.Services.AddScoped<IEmail, EmailRepo>();
-			builder.Services.AddScoped<IUsedLeaveDays<UsedLeaveDays>,  UsedLeaveDaysRepo>();
+			builder.Services.AddScoped<IUsedLeaveDays<Models.UsedLeaveDays>, UsedLeaveDaysRepo>();
 
 
 			builder.Services.AddCors((setup =>
@@ -56,9 +56,19 @@ namespace EmployeeHub_MinimalAPI
 
 			app.UseHttpsRedirection();
 
-			app.ConfigureEndpoints();
+			ConfigureEndpoinst(app);
 
             app.Run();
+		}
+
+		private static void ConfigureEndpoinst(WebApplication app)
+		{
+			app.ConfigureEmail();
+			app.ConfigureEmployee();
+			app.ConfigureLeaveRequest();
+			app.ConfigureLeaveType();
+			app.ConfigureLogin();
+			app.ConfigureUsedLeaveDays();
 		}
 	}
 }
