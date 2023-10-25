@@ -10,11 +10,35 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 	{
 		public static void ConfigureEmployee(this WebApplication app)
 		{
-			app.MapGet("api/employee", GetEmployee).WithName("GetAllEmployees").WithTags("Get").Produces(200);
-			app.MapGet("api/employee/{id:int}", GetEmployeeById).WithName("GetEmployeeById").WithTags("Get").Produces(200).Produces(404);
-			app.MapPost("api/employee", CreateEmployee).WithName("CreateNewEmployee").WithTags("Post").Produces(200).Produces(404);
-			app.MapPut("api/employee", UpdateEmployee).WithName("UpdateEmployee").WithTags("Put").Produces(200).Produces(404);
-			app.MapDelete("api/employee/{id:int}", DeleteEmployee).WithName("DeleteEmployee").WithTags("Delete").Produces(200).Produces(404);
+			// Employee Endpoints
+			app.MapGet("api/employee", GetEmployee)
+				.WithName("GetAllEmployees")
+				.WithTags("Employee")
+				.Produces(200);
+
+			app.MapGet("api/employee/{id:int}", GetEmployeeById)
+				.WithName("GetEmployeeById")
+				.WithTags("Employee")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPost("api/employee", CreateEmployee)
+				.WithName("CreateNewEmployee")
+				.WithTags("Employee")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPut("api/employee", UpdateEmployee)
+				.WithName("UpdateEmployee")
+				.WithTags("Employee")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapDelete("api/employee/{id:int}", DeleteEmployee)
+				.WithName("DeleteEmployee")
+				.WithTags("Employee")
+				.Produces(200)
+				.Produces(404);
 		}
 
 		private async static Task<IResult> GetEmployee([FromServices] IEmployee<Models.Employee> repository)

@@ -9,11 +9,35 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 	{
 		public static void ConfigureLeaveType(this WebApplication app)
 		{
-			app.MapGet("api/leaveType", GetLeaveType).WithName("GetAllLeaveType").WithTags("Get").Produces(200);
-			app.MapGet("api/leaveType/{id:int}", GetLeaveTypeById).WithName("GetLeaveTypeById").WithTags("Get").Produces(200).Produces(404);
-			app.MapPost("api/leaveType", CreateLeaveType).WithName("CreateNewLeaveType").WithTags("Post").Produces(200).Produces(404);
-			app.MapPut("api/leaveType", UpdateLeaveType).WithName("UpdateLeaveType").WithTags("Put").Produces(200).Produces(404);
-			app.MapDelete("api/leaveType/{id:int}", DeleteLeaveType).WithName("DeleteLeaveType").WithTags("Delete").Produces(200).Produces(404);
+			// Leave Type Endpoints
+			app.MapGet("api/leaveType", GetLeaveType)
+				.WithName("GetAllLeaveType")
+				.WithTags("Leave Type")
+				.Produces(200);
+
+			app.MapGet("api/leaveType/{id:int}", GetLeaveTypeById)
+				.WithName("GetLeaveTypeById")
+				.WithTags("Leave Type")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPost("api/leaveType", CreateLeaveType)
+				.WithName("CreateNewLeaveType")
+				.WithTags("Leave Type")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPut("api/leaveType", UpdateLeaveType)
+				.WithName("UpdateLeaveType")
+				.WithTags("Leave Type")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapDelete("api/leaveType/{id:int}", DeleteLeaveType)
+				.WithName("DeleteLeaveType")
+				.WithTags("Leave Type")
+				.Produces(200)
+				.Produces(404);
 		}
 
 		private async static Task<IResult> GetLeaveType([FromServices] ILeaveType<Models.LeaveType> repository)

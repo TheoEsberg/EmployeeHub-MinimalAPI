@@ -64,20 +64,62 @@ namespace EmployeeHub_MinimalAPI.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "john.doe@example.com",
-                            Name = "John Doe",
-                            Password = "password123",
-                            VacationDays = 10,
-                            isAdmin = true
+                            Email = "bob@gmail.com",
+                            Name = "Bob Bobsson",
+                            Password = "$2b$10$U92VNputGbz4J.z1m3ZUp.E46DdJ22KUJ72.XPvhNXktyehEpU9ha",
+                            Salt = "$2b$10$U92VNputGbz4J.z1m3ZUp.",
+                            VacationDays = 0,
+                            isAdmin = false
                         },
                         new
                         {
                             Id = 2,
-                            Email = "jane.smith@example.com",
+                            Email = "jane@gmail.com",
                             Name = "Jane Smith",
-                            Password = "securepwd",
+                            Password = "$2b$10$W3PETHdv.y/exsGEkTvNPegz4rYs.bZ1/9NbI73Nv53yNMoep3bNC",
+                            Salt = "$2b$10$W3PETHdv.y/exsGEkTvNPe",
                             VacationDays = 15,
                             isAdmin = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "alice@gmail.com",
+                            Name = "Alice Johnson",
+                            Password = "$2b$10$5BS2ZgnUYHKPe5Uj.DUwbecByHn9vkCH5613N.Z10E3zxQpAkuxy2",
+                            Salt = "$2b$10$5BS2ZgnUYHKPe5Uj.DUwbe",
+                            VacationDays = 12,
+                            isAdmin = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "dick@gmail.com",
+                            Name = "Dick Brown",
+                            Password = "$2b$10$AKxwczP13370BrKE4MZ.7ONBndVMMzE4Z4X7mn0qbaZSGfbrz7Oy6",
+                            Salt = "$2b$10$AKxwczP13370BrKE4MZ.7O",
+                            VacationDays = 18,
+                            isAdmin = false
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "eva@gmail.com",
+                            Name = "Eva Williams",
+                            Password = "$2b$10$aN/1IRODUdyBQd29rawy5OTqcKz.vFfQD5w.g0dTDSQZjAFdyDMx.",
+                            Salt = "$2b$10$aN/1IRODUdyBQd29rawy5O",
+                            VacationDays = 14,
+                            isAdmin = false
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "admin",
+                            Name = "Administrator",
+                            Password = "$2b$10$ehYSUTlNLSDfAoIC6HNd0.m1ERoBrCNSJJVga1sR6UnaZ84jZd4Hu",
+                            Salt = "$2b$10$ehYSUTlNLSDfAoIC6HNd0.",
+                            VacationDays = 0,
+                            isAdmin = true
                         });
                 });
 
@@ -139,6 +181,38 @@ namespace EmployeeHub_MinimalAPI.Migrations
                             RequestDate = new DateTime(2023, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ResponseMessage = "Approved",
                             StartDate = new DateTime(2023, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EmployeeId = 3,
+                            EndDate = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LeaveTypeId = 3,
+                            Pending = 0,
+                            RequestDate = new DateTime(2023, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EmployeeId = 4,
+                            EndDate = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LeaveTypeId = 4,
+                            Pending = 1,
+                            RequestDate = new DateTime(2023, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ResponseMessage = "Approved",
+                            StartDate = new DateTime(2023, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            EmployeeId = 5,
+                            EndDate = new DateTime(2023, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LeaveTypeId = 5,
+                            Pending = 1,
+                            RequestDate = new DateTime(2023, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ResponseMessage = "Approved",
+                            StartDate = new DateTime(2023, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -178,6 +252,24 @@ namespace EmployeeHub_MinimalAPI.Migrations
                             Id = 2,
                             MaxDays = 10,
                             Name = "Sick Leave"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            MaxDays = 15,
+                            Name = "Maternity Leave"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            MaxDays = 10,
+                            Name = "Paternity Leave"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            MaxDays = 5,
+                            Name = "Bereavement Leave"
                         });
                 });
 
@@ -201,6 +293,43 @@ namespace EmployeeHub_MinimalAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UsedLeaveDays");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Days = 10,
+                            EmployeeId = 1,
+                            LeaveTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Days = 10,
+                            EmployeeId = 2,
+                            LeaveTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Days = 0,
+                            EmployeeId = 3,
+                            LeaveTypeId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Days = 0,
+                            EmployeeId = 4,
+                            LeaveTypeId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Days = 1,
+                            EmployeeId = 5,
+                            LeaveTypeId = 5
+                        });
                 });
 
             modelBuilder.Entity("EmployeeHub_MinimalAPI.Models.Employee", b =>

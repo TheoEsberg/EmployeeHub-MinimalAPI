@@ -8,13 +8,47 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 	{
 		public static void ConfigureUsedLeaveDays(this WebApplication app)
 		{
-			app.MapGet("api/usedLeaveDays", GetAllUsedLeaveDays).WithName("GetAllUsedLeaveDays").WithTags("Get").Produces(200);
-			app.MapGet("api/usedLeaveDays/{id:int}", GetUsedLeaveDaysById).WithName("GetUsedLeaveDaysById").WithTags("Get").Produces(200).Produces(404);
-			app.MapGet("api/usedLeaveDays/employee/{employeeId:int}", GetUsedLeaveDaysByEmployeeId).WithName("GetUsedLeaveDaysByEmployeeId").WithTags("Get").Produces(200).Produces(404);
-			app.MapGet("api/usedLeaveDays/leaveType/{leaveTypeId:int}", GetUsedLeaveDaysByLeaveTypeId).WithName("GetUsedLeaveDaysByLeaveTypeId").WithTags("Get").Produces(200).Produces(404);
-			app.MapPost("api/usedLeaveDays", CreateUsedLeaveDays).WithName("CreateUsedLeaveDays").WithTags("Post").Produces(200).Produces(404);
-			app.MapPut("api/usedLeaveDays", UpdateUsedLeaveDays).WithName("UpdateUsedLeaveDays").WithTags("Put").Produces(200).Produces(404);
-			app.MapDelete("api/usedLeaveDays/{id:int}", DeleteUsedLeaveDays).WithName("DeleteUsedLeaveDays").WithTags("Delete").Produces(200).Produces(404);
+			// Used Leave Days Endpoints
+			app.MapGet("api/usedLeaveDays", GetAllUsedLeaveDays)
+				.WithName("GetAllUsedLeaveDays")
+				.WithTags("Used Leave Days")
+				.Produces(200);
+
+			app.MapGet("api/usedLeaveDays/{id:int}", GetUsedLeaveDaysById)
+				.WithName("GetUsedLeaveDaysById")
+				.WithTags("Used Leave Days")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapGet("api/usedLeaveDays/employee/{employeeId:int}", GetUsedLeaveDaysByEmployeeId)
+				.WithName("GetUsedLeaveDaysByEmployeeId")
+				.WithTags("Used Leave Days")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapGet("api/usedLeaveDays/leaveType/{leaveTypeId:int}", GetUsedLeaveDaysByLeaveTypeId)
+				.WithName("GetUsedLeaveDaysByLeaveTypeId")
+				.WithTags("Used Leave Days")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPost("api/usedLeaveDays", CreateUsedLeaveDays)
+				.WithName("CreateUsedLeaveDays")
+				.WithTags("Used Leave Days")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPut("api/usedLeaveDays", UpdateUsedLeaveDays)
+				.WithName("UpdateUsedLeaveDays")
+				.WithTags("Used Leave Days")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapDelete("api/usedLeaveDays/{id:int}", DeleteUsedLeaveDays)
+				.WithName("DeleteUsedLeaveDays")
+				.WithTags("Used Leave Days")
+				.Produces(200)
+				.Produces(404);
 		}
 
 		private async static Task<IResult> CreateUsedLeaveDays([FromServices] IUsedLeaveDays<Models.UsedLeaveDays> repository, UsedLeaveDaysCreateDTO dto)

@@ -8,12 +8,40 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 	{
 		public static void ConfigureLeaveRequest(this WebApplication app)
 		{
-			app.MapGet("api/leaveRequest", GetLeaveRequest).WithName("GetAllLeaveRequests").WithTags("Get").Produces(200);
-			app.MapGet("api/leaveRequest/employee/{id:int}", GetLeaveRequestByEmployeeId).WithName("GetAllLeaveRequestsByEmployee").WithTags("Get").Produces(200);
-			app.MapGet("api/leaveRequest/{id:int}", GetLeaveRequestById).WithName("GetLeaveRequestById").WithTags("Get").Produces(200).Produces(404);
-			app.MapPost("api/leaveRequest", CreateLeaveRequest).WithName("CreateNewLeaveRequest").WithTags("Post").Produces(200).Produces(404);
-			app.MapPut("api/leaveRequest", UpdateLeaveRequest).WithName("UpdateLeaveRequest").WithTags("Put").Produces(200).Produces(404);
-			app.MapDelete("api/leaveRequest/{id:int}", DeleteLeaveRequest).WithName("DeleteLeaveRequest").WithTags("Delete").Produces(200).Produces(404);
+			// Leave Request Endpoints
+			app.MapGet("api/leaveRequest", GetLeaveRequest)
+				.WithName("GetAllLeaveRequests")
+				.WithTags("Leave Request")
+				.Produces(200);
+
+			app.MapGet("api/leaveRequest/employee/{id:int}", GetLeaveRequestByEmployeeId)
+				.WithName("GetAllLeaveRequestsByEmployee")
+				.WithTags("Leave Request")
+				.Produces(200);
+
+			app.MapGet("api/leaveRequest/{id:int}", GetLeaveRequestById)
+				.WithName("GetLeaveRequestById")
+				.WithTags("Leave Request")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPost("api/leaveRequest", CreateLeaveRequest)
+				.WithName("CreateNewLeaveRequest")
+				.WithTags("Leave Request")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapPut("api/leaveRequest", UpdateLeaveRequest)
+				.WithName("UpdateLeaveRequest")
+				.WithTags("Leave Request")
+				.Produces(200)
+				.Produces(404);
+
+			app.MapDelete("api/leaveRequest/{id:int}", DeleteLeaveRequest)
+				.WithName("DeleteLeaveRequest")
+				.WithTags("Leave Request")
+				.Produces(200)
+				.Produces(404);
 		}
 
 		private async static Task<IResult> GetLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository)

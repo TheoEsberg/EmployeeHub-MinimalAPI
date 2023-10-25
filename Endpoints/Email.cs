@@ -8,7 +8,11 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 	{
 		public static void ConfigureEmail(this WebApplication app)
 		{
-			app.MapPost("api/SendMail", SendEmail).WithName("SendEmail").WithTags("Post").Produces(200).Produces(400);
+			app.MapPost("api/SendMail", SendEmail)
+				.WithName("SendEmail")
+				.WithTags("Email")
+				.Produces(200)
+				.Produces(400);
 		}
 
 		private async static Task<IResult> SendEmail([FromServices] IEmail emailService, EmailRequestDTO emailRequest)

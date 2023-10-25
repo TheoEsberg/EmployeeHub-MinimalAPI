@@ -9,7 +9,12 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 	{
 		public static void ConfigureLogin(this WebApplication app)
 		{
-			app.MapPost("/api/Login", LoginCheck).WithName("Login").WithTags("Post").Produces(200).Produces(404);
+			// Login Endpoint
+			app.MapPost("api/Login", LoginCheck)
+				.WithName("Login")
+				.WithTags("Login")
+				.Produces(200)
+				.Produces(404);
 		}
 
 		private async static Task<IResult> LoginCheck([FromServices] ILogin<Models.Employee> repository, LoginDTO loginData, PasswordHashingService passwordHashingService)
