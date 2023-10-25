@@ -70,7 +70,7 @@ namespace EmployeeHub_MinimalAPI.Services.Repositories
 
         public async Task<UsedLeaveDays> UpdateDaysAsync(UsedLeaveDaysUpdateDTO dto)
         {
-            var oldUsedLeaveDays = await _appDbContext.UsedLeaveDays.FindAsync(dto.Id);
+            var oldUsedLeaveDays = await _appDbContext.UsedLeaveDays.FirstOrDefaultAsync(e => e.EmployeeId == dto.EmployeeId && e.LeaveTypeId == dto.LeaveTypeId);
             if (oldUsedLeaveDays != null)
             {
                 oldUsedLeaveDays.Days = oldUsedLeaveDays.Days + dto.Days;

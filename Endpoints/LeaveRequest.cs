@@ -1,4 +1,5 @@
 ﻿using EmployeeHub_MinimalAPI.Models.DTOs.LeaveRequest;
+using EmployeeHub_MinimalAPI.Models.DTOs.UsedLeaveDays;
 using EmployeeHub_MinimalAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,10 +73,21 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			return Results.Ok(result);
 		}
 
-		private async static Task<IResult> UpdateLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository, LeaveRequestUpdateDTO dto)
+		private async static Task<IResult> UpdateLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository,[FromServices] IUsedLeaveDays<Models.UsedLeaveDays> usedLeaveDays, LeaveRequestUpdateDTO dto)
 		{
+			var test = dto.Pending;
 			var result = await repository.UpdateAsync(dto);
 			if (result == null) { return Results.BadRequest(); }
+			if(result.Pending==1 && result.Pending != test)
+			{
+				var updatedUsedLeaveDays = new UsedLeaveDaysUpdateDTO
+				{
+					EmployeeId = result.EmployeeId,
+					LeaveTypeId = result.LeaveTypeId,
+					Days = (result.EndDate - result.StartDate).Days
+				};
+				await usedLeaveDays.UpdateDaysAsync(updatedUsedLeaveDays);
+			}
 			return Results.Ok(result);
 		}
 

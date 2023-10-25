@@ -25,6 +25,11 @@ namespace EmployeeHub_MinimalAPI.Services.Repositories
 				EndDate = dto.EndDate,
 				RequestDate = DateTime.Now
 			};
+
+			var maxDays=await _appDbContext.LeaveTypes.FindAsync(newLeaveRequest.LeaveTypeId);
+			var daysUsed = await _appDbContext.UsedLeaveDays.FirstOrDefaultAsync(e => e.EmployeeId == newLeaveRequest.EmployeeId && e.LeaveTypeId == newLeaveRequest.LeaveTypeId);
+			if ((newLeaveRequest.EndDate - newLeaveRequest.StartDate).Days > (maxDays.MaxDays - daysUsed.Days)) { return null; }
+
 			await _appDbContext.LeaveRequests.AddAsync(newLeaveRequest);
 			await _appDbContext.SaveChangesAsync();
 			return newLeaveRequest;
