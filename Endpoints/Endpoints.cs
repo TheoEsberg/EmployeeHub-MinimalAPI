@@ -65,10 +65,20 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			return Results.Ok(result);
 		}
 
-		private async static Task<IResult> CreateEmployee([FromServices] IEmployee<Employee> repository, EmployeeCreateDTO dto, PasswordHashingService passwordHashingService)
+		private async static Task<IResult> CreateEmployee([FromServices] IEmployee<Employee> repository,[FromServices] ILeaveType<LeaveType> LeaveType,[FromServices] IUsedLeaveDays<UsedLeaveDays> usedLeaveDays, EmployeeCreateDTO dto, PasswordHashingService passwordHashingService)
 		{
 			var result = await repository.CreateAsync(dto, passwordHashingService);
 			if (result == null) { return Results.BadRequest(); }
+			var leaveType= await LeaveType.GetAllAsync();
+			foreach (var leave in leaveType)
+			{
+				var newUsedLeaveDays = new UsedLeaveDaysCreateDTO
+				{
+					EmployeeId = result.Id,
+					LeaveTypeId = leave.Id,
+				};
+				await usedLeaveDays.CreateAsync(newUsedLeaveDays);
+			}
 			return Results.Ok(result);
 		}
 
@@ -160,10 +170,20 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			if (result == null) { return Results.BadRequest(); }
 			return Results.Ok(result);
 		}
-		private async static Task<IResult> CreateLeaveType([FromServices] ILeaveType<LeaveType> repository, LeaveTypeCreateDTO dto)
+		private async static Task<IResult> CreateLeaveType([FromServices] ILeaveType<LeaveType> repository,[FromServices] IEmployee<Employee> employee,IUsedLeaveDays<UsedLeaveDays> usedLeaveDays, LeaveTypeCreateDTO dto)
 		{
 			var result = await repository.CreateAsync(dto);
 			if (result == null) { return Results.BadRequest(); }
+			var allEmployee = await employee.GetAllAsync();
+			foreach (var emp in allEmployee)
+			{
+				var newUsedLeaveDays = new UsedLeaveDaysCreateDTO
+				{
+					LeaveTypeId = result.Id,
+					EmployeeId = emp.Id,
+				};
+				await usedLeaveDays.CreateAsync(newUsedLeaveDays);
+			}
 			return Results.Ok(result);
 		}
 		private async static Task<IResult> UpdateLeaveType([FromServices] ILeaveType<LeaveType> repository, LeaveType entity)
