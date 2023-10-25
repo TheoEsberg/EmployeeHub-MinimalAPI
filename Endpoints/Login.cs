@@ -1,5 +1,4 @@
 ﻿using EmployeeHub_MinimalAPI.Models.DTOs.Login;
-using EmployeeHub_MinimalAPI.Models;
 using EmployeeHub_MinimalAPI.Services.Interfaces;
 using EmployeeHub_MinimalAPI.Services.Password;
 using Microsoft.AspNetCore.Mvc;

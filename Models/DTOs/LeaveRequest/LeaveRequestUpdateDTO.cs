@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace EmployeeHub_MinimalAPI.Models.DTOs.LeaveRequest
 {
 	public class LeaveRequestUpdateDTO

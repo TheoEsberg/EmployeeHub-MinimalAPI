@@ -1,6 +1,4 @@
-﻿using BCrypt;
-using EmployeeHub_MinimalAPI.Migrations;
-
+﻿
 namespace EmployeeHub_MinimalAPI.Services.Password
 {
 	public class PasswordHashingService

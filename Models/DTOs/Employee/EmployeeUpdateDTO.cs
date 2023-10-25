@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace EmployeeHub_MinimalAPI.Models.DTOs.Employee
 {
 	public class EmployeeUpdateDTO

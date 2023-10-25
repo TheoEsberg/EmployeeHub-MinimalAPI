@@ -1,7 +1,6 @@
 
 using EmployeeHub_MinimalAPI.Data;
 using EmployeeHub_MinimalAPI.Endpoints;
-using EmployeeHub_MinimalAPI.Models;
 using EmployeeHub_MinimalAPI.Services.Password;
 using EmployeeHub_MinimalAPI.Services.Repositories;
 using EmployeeHub_MinimalAPI.Services.Interfaces;

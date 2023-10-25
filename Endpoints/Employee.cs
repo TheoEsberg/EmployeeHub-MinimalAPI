@@ -1,7 +1,6 @@
 ﻿using EmployeeHub_MinimalAPI.Services.Interfaces;
 using EmployeeHub_MinimalAPI.Models.DTOs.Employee;
 using EmployeeHub_MinimalAPI.Models.DTOs.UsedLeaveDays;
-using EmployeeHub_MinimalAPI.Models;
 using EmployeeHub_MinimalAPI.Services.Password;
 using Microsoft.AspNetCore.Mvc;
 
