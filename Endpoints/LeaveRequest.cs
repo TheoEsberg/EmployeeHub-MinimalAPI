@@ -92,7 +92,9 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			int testingDays = ((test.EndDate - test.StartDate).Days) + 1;
 			var result = await repository.UpdateAsync(dto);
 			int totalDays = ((result.EndDate - result.StartDate).Days) + 1;
+
 			if (result == null) { return Results.BadRequest(); }
+
 			if(result.Pending==1 && result.Pending != testingPending)
 			{
 				var updatedUsedLeaveDays = new UsedLeaveDaysUpdateDTO
@@ -126,10 +128,23 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			return Results.Ok(result);
 		}
 
-		private async static Task<IResult> DeleteLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository, int id)
+		private async static Task<IResult> DeleteLeaveRequest([FromServices] ILeaveRequest<Models.LeaveRequest> repository,[FromServices] IUsedLeaveDays<Models.UsedLeaveDays> usedLeaveDays, int id)
 		{
 			var result = await repository.DeleteAsync(id);
 			if (result == null) { return Results.BadRequest(id); }
+
+			if (result.Pending == 1)
+			{
+				var totalDays = ((result.EndDate - result.StartDate).Days) + 1;
+
+				var updatedUsedLeaveDays = new UsedLeaveDaysUpdateDTO
+				{
+					EmployeeId = result.EmployeeId,
+					LeaveTypeId = result.LeaveTypeId,
+					Days = -totalDays
+				};
+				await usedLeaveDays.UpdateDaysAsync(updatedUsedLeaveDays);
+			}
 			return Results.Ok(result);
 		}
 	}
