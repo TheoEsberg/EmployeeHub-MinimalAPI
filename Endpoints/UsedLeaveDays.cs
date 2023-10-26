@@ -1,4 +1,5 @@
-﻿using EmployeeHub_MinimalAPI.Models.DTOs.UsedLeaveDays;
+﻿using EmployeeHub_MinimalAPI.Models;
+using EmployeeHub_MinimalAPI.Models.DTOs.UsedLeaveDays;
 using EmployeeHub_MinimalAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,13 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 				.WithTags("Used Leave Days")
 				.Produces(200)
 				.Produces(404);
+
+			app.MapGet("api/usedLeaveDays/{employeeId:int}/{leaveTypeId:int}", GetUsedLeaveDaysByEmployeeLeaveId)
+				.WithName("GetUsedLeaveDaysByEmployeeLeaveTypeId")
+				.WithTags("Used Leave Days")
+				.Produces(200)
+				.Produces(404);
+
 
 			app.MapPost("api/usedLeaveDays", CreateUsedLeaveDays)
 				.WithName("CreateUsedLeaveDays")
@@ -65,10 +73,16 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 			return Results.Ok(result);
 		}
 
-		private async static Task<IResult> GetAllUsedLeaveDays([FromServices] IUsedLeaveDays<Models.UsedLeaveDays> repository)
+		private async static Task<IResult> GetAllUsedLeaveDays([FromServices] IUsedLeaveDays<Models.UsedLeaveDays> repository, [FromServices] ILeaveType<Models.LeaveType> leaveType)
 		{
 			var result = await repository.GetAllAsync();
 			if (result == null) { return Results.BadRequest(); }
+			var types = await leaveType.GetAllAsync();
+			foreach (var item in result)
+			{
+				var type = types.FirstOrDefault(x => x.Id == item.LeaveTypeId);
+				item.Days = (type.MaxDays - item.Days);
+			}
 			return Results.Ok(result);
 		}
 
@@ -101,6 +115,13 @@ namespace EmployeeHub_MinimalAPI.Endpoints
 		{
 			var result = await repository.DeleteAsync(id);
 			if (result == null) { return Results.BadRequest(); }
+			return Results.Ok(result);
+		}
+
+		private async static Task<IResult> GetUsedLeaveDaysByEmployeeLeaveId([FromServices] IUsedLeaveDays<Models.UsedLeaveDays> repository, int employeeId, int leaveTypeId)
+		{
+			var result = await repository.GetByEmployeeLeaveId(employeeId, leaveTypeId);
+			if (result == null) { return Results.BadRequest(); };
 			return Results.Ok(result);
 		}
 	}
