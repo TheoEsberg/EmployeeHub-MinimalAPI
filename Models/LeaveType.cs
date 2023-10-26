@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EmployeeHub_MinimalAPI.Models
 {
@@ -11,6 +12,7 @@ namespace EmployeeHub_MinimalAPI.Models
 		[Required]
 		public int MaxDays { get; set; }
 
+		[JsonIgnore]
 		public ICollection<LeaveRequest> LeaveRequest { get; set; }
 	}
 }

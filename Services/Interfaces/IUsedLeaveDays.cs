@@ -11,5 +11,6 @@ namespace EmployeeHub_MinimalAPI.Services.Interfaces
 		Task<T> DeleteAsync(int id);
 		Task<IEnumerable<T>> GetByEmployeeId(int employeeId);
 		Task<IEnumerable<T>> GetByLeaveTypeId(int leaveTypeId);
+		Task<T> GetByEmployeeLeaveId(int employeeId,int leaveTypeId);
 	}
 }
