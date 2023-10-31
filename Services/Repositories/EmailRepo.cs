@@ -31,7 +31,7 @@ namespace EmployeeHub_MinimalAPI.Services.Repositories
         {
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("your_mail@example.com"),
+                From = new MailAddress("silverpiratesemployeehub@outlook.com"),
                 Subject = subject,
                 Body = body,
                 IsBodyHtml = true,
