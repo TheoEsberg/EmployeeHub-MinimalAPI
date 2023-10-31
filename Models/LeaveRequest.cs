@@ -21,6 +21,5 @@ namespace EmployeeHub_MinimalAPI.Models
 		public DateTime EndDate { get; set; }
 		[Required]
 		public DateTime RequestDate { get; set; }
-
 	}
 }

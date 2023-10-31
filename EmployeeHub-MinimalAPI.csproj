@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>EmployeeHub_MinimalAPI</RootNamespace>
+    <UserSecretsId>15a6cc02-a429-4cdd-a367-5648a593424a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
